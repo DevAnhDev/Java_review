@@ -1,0 +1,56 @@
+version: '3.9'
+
+#services:
+#  backend:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - '8080:8080'
+#    networks:
+#      - network
+##    environment:
+#networks:
+#  network:
+#    driver: bridge
+
+
+services:
+  mysql:
+    image: mysql
+    container_name: database_container
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: configtest
+      MYSQL_USER: trungho
+      MYSQL_PASSWORD: 12345
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  backend:
+    image: macpro0098/validate_composer:v1.0
+    container_name: back_end_container
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/configtest
+      SPRING_DATASOURCE_USERNAME: trungho
+      SPRING_DATASOURCE_PASSWORD: 12345
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+volumes:
+  mysql_data:
+
+networks:
+  app-network:
+    driver: bridge
+
+
+
+

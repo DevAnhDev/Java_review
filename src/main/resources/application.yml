@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: validatedocsapi
+open:
+  api:
+    title: Open API document
+    version: 1.0.0
+    description: this is document api for you
+    serverUrl: http://localhost:8080
+    serverName: server test
+
